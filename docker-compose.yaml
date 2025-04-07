@@ -90,8 +90,6 @@ services:
     ports:
       - ${KONG_HTTP_PORT}:8000/tcp
       - ${KONG_HTTPS_PORT}:8443/tcp
-    volumes:
-      - /etc/letsencrypt/live/cnfi.gruenecho.de:/etc/kong/ssl
     depends_on:
       analytics:
         condition: service_healthy
@@ -112,6 +110,7 @@ services:
     volumes:
       # https://github.com/supabase/supabase/issues/12661
       - ./volumes/api/kong.yml:/home/kong/temp.yml:ro
+      - /etc/letsencrypt/live/cnfi.gruenecho.de:/etc/kong/ssl
 
   auth:
     container_name: supabase-auth
