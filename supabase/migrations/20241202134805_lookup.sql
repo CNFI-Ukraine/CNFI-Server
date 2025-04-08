@@ -2,7 +2,7 @@ SET default_transaction_read_only = OFF;
 -- SCHEMA lookup
 CREATE SCHEMA lookup;
 ALTER SCHEMA lookup OWNER TO postgres;
-COMMENT ON SCHEMA lookup IS 'Lookup Tabellen';
+COMMENT ON SCHEMA lookup IS 'Lookup Tables';
 GRANT USAGE ON SCHEMA lookup TO anon, authenticated, service_role;
 GRANT ALL ON ALL TABLES IN SCHEMA lookup TO anon, authenticated, service_role;
 GRANT ALL ON ALL ROUTINES IN SCHEMA lookup TO anon, authenticated, service_role;
@@ -12,92 +12,304 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA lookup GRANT ALL ON ROUTINE
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA lookup GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
 
 
-
 SET search_path TO lookup;
 
 CREATE TABLE IF NOT EXISTS lookup_TEMPLATE (
-    --abbreviation text UNIQUE NOT NULL,
-    code serial UNIQUE NOT NULL,
-    id uuid DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
-    name_de text NOT NULL,
-    name_en text NULL,
-    interval text[] NULL,
-    sort INTEGER NULL
+    "I2" INTEGER,
+    "I1" INTEGER,
+    "Id" INTEGER PRIMARY KEY NOT NULL, --Serial?
+    "Name" TEXT,
+    "Name1" TEXT,
+    "Name_en" TEXT DEFAULT NULL,
+    "PR" INTEGER
 );
 
 
+CREATE TABLE IF NOT EXISTS "Ivf_Bazis_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE IF NOT EXISTS lookup_browsing (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_cluster_situation (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_cluster_status (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_dead_wood_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_decomposition (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_edge_status (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_edge_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_elevation_level (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_exploration_instruction (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_ffh_forest_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_forest_community (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_forest_office (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_forest_status (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_gnss_quality (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_grid_density (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_growth_district (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_harvesting_method (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_land_use (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_management_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_marker_profile (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_marker_status (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_property_size_class (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_property_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_pruning (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_sampling_stratum (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_stand_development_phase (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_stand_layer (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_stand_structure (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_Bonitet";
+CREATE TABLE IF NOT EXISTS "Ivf_Bonitet" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE IF NOT EXISTS lookup_state (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-ALTER TABLE lookup_state ADD COLUMN abbreviation text NULL;
+DROP TABLE IF EXISTS "Ivf_Chastka_Vpliv";
+CREATE TABLE IF NOT EXISTS "Ivf_Chastka_Vpliv" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE IF NOT EXISTS lookup_stem_breakage (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_stem_form (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_terrain_form (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_terrain (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_tree_size_class (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_tree_species_group (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_tree_species (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-ALTER TABLE lookup_tree_species ADD COLUMN taxonomy_order varchar(1) NULL;
-ALTER TABLE lookup_tree_species ADD COLUMN height_group varchar(20) NULL;
-ALTER TABLE lookup_tree_species ADD COLUMN genus text NULL;
-ALTER TABLE lookup_tree_species ADD COLUMN species text NULL;
+DROP TABLE IF EXISTS "Ivf_Chinnik_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Chinnik_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE IF NOT EXISTS lookup_tree_status (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_basal_area_factor (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_trees_less_4meter_layer (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_trees_less_4meter_mirrored (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_trees_less_4meter_origin (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_harvest_restriction (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
---CREATE TABLE IF NOT EXISTS lookup_harvest_restriction_source (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_accessibility (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_biotope (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE IF NOT EXISTS lookup_damage_peel (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_Chkidnik_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Chkidnik_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
--- External Lookup Tables
-CREATE TABLE lookup_ffh (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_national_park (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_natur_park (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_vogel_schutzgebiet (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_biogeographische_region (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_ChsLia";
+CREATE TABLE IF NOT EXISTS "Ivf_ChsLia" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE lookup_biosphaere (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-ALTER TABLE lookup_biosphaere ADD COLUMN bfn_code varchar(20) NULL;
+DROP TABLE IF EXISTS "Ivf_ChsRos";
+CREATE TABLE IF NOT EXISTS "Ivf_ChsRos" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE lookup_natur_schutzgebiet (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_forestry_office (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_gemeinde (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_Chstka";
+CREATE TABLE IF NOT EXISTS "Ivf_Chstka" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE lookup_usage_type (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_Davnist";
+CREATE TABLE IF NOT EXISTS "Ivf_Davnist" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
+DROP TABLE IF EXISTS "Ivf_Davnist_Ponovlena_Pochkodg";
+CREATE TABLE IF NOT EXISTS "Ivf_Davnist_Ponovlena_Pochkodg" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
 
-CREATE TABLE lookup_interval (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
-CREATE TABLE lookup_layer (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+DROP TABLE IF EXISTS "Ivf_Defoliacia";
+CREATE TABLE IF NOT EXISTS "Ivf_Defoliacia" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Dehromacia";
+CREATE TABLE IF NOT EXISTS "Ivf_Dehromacia" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_DerevoSYHEChinik";
+CREATE TABLE IF NOT EXISTS "Ivf_DerevoSYHEChinik" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_DerevoSYHEStadia";
+CREATE TABLE IF NOT EXISTS "Ivf_DerevoSYHEStadia" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_DiloDrowa_Der";
+CREATE TABLE IF NOT EXISTS "Ivf_DiloDrowa_Der" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Doctup";
+CREATE TABLE IF NOT EXISTS "Ivf_Doctup" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Ekspoz";
+CREATE TABLE IF NOT EXISTS "Ivf_Ekspoz" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_FormGumus";
+CREATE TABLE IF NOT EXISTS "Ivf_FormGumus" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GiveSuche";
+CREATE TABLE IF NOT EXISTS "Ivf_GiveSuche" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Gnil";
+CREATE TABLE IF NOT EXISTS "Ivf_Gnil" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_God";
+CREATE TABLE IF NOT EXISTS "Ivf_God" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GospodarForma";
+CREATE TABLE IF NOT EXISTS "Ivf_GospodarForma" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GospodarLg";
+CREATE TABLE IF NOT EXISTS "Ivf_GospodarLg" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GospodarLi";
+CREATE TABLE IF NOT EXISTS "Ivf_GospodarLi" (
+    "I2" INTEGER,
+    "I1" INTEGER,
+    "Id" INTEGER,
+    "Name" TEXT,
+    "Name1" TEXT,
+    "PR" INTEGER,
+    PRIMARY KEY ( "I1", "Id" )
+);
+
+DROP TABLE IF EXISTS "Ivf_GospodarPravo";
+CREATE TABLE IF NOT EXISTS "Ivf_GospodarPravo" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GrunVisot";
+CREATE TABLE IF NOT EXISTS "Ivf_GrunVisot" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_GrupUgit";
+CREATE TABLE IF NOT EXISTS "Ivf_GrupUgit" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Haruvatost";
+CREATE TABLE IF NOT EXISTS "Ivf_Haruvatost" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Hvoroba_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Hvoroba_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Jarus";
+CREATE TABLE IF NOT EXISTS "Ivf_Jarus" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_JarusDerevo";
+CREATE TABLE IF NOT EXISTS "Ivf_JarusDerevo" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_KatZem";
+CREATE TABLE IF NOT EXISTS "Ivf_KatZem" (
+    "I2" INTEGER,
+    "I1" INTEGER,
+    "Id" INTEGER PRIMARY KEY,
+    "Name" TEXT,
+    "Name1" TEXT,
+    "PR" INTEGER,
+    "Grupa" INTEGER
+);
+
+DROP TABLE IF EXISTS "Ivf_KlasKraft";
+CREATE TABLE IF NOT EXISTS "Ivf_KlasKraft" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Kleimo";
+CREATE TABLE IF NOT EXISTS "Ivf_Kleimo" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Krutizna";
+CREATE TABLE IF NOT EXISTS "Ivf_Krutizna" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_MechSklad";
+CREATE TABLE IF NOT EXISTS "Ivf_MechSklad" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_MezoR";
+CREATE TABLE IF NOT EXISTS "Ivf_MezoR" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_MikroR";
+CREATE TABLE IF NOT EXISTS "Ivf_MikroR" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Mitka";
+CREATE TABLE IF NOT EXISTS "Ivf_Mitka" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Najavnist";
+CREATE TABLE IF NOT EXISTS "Ivf_Najavnist" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_NameGrunt";
+CREATE TABLE IF NOT EXISTS "Ivf_NameGrunt" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Nazva";
+CREATE TABLE IF NOT EXISTS "Ivf_Nazva" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Obla";
+CREATE TABLE IF NOT EXISTS "Ivf_Obla" (
+    "I2" INTEGER,
+    "I1" INTEGER,
+    "Id" INTEGER PRIMARY KEY,
+    "Name" TEXT,
+    "Name1" TEXT,
+    "PR" INTEGER,
+    "Area" DOUBLE PRECISION,
+    "PointCount" INTEGER
+);
+
+DROP TABLE IF EXISTS "Ivf_Ogolenost";
+CREATE TABLE IF NOT EXISTS "Ivf_Ogolenost" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Osuh";
+CREATE TABLE IF NOT EXISTS "Ivf_Osuh" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_PenUh";
+CREATE TABLE IF NOT EXISTS "Ivf_PenUh" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pochkodgenna_Ponovlena";
+CREATE TABLE IF NOT EXISTS "Ivf_Pochkodgenna_Ponovlena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pochodgena_Ponovlena";
+CREATE TABLE IF NOT EXISTS "Ivf_Pochodgena_Ponovlena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pochodgenna";
+CREATE TABLE IF NOT EXISTS "Ivf_Pochodgenna" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pohirena";
+CREATE TABLE IF NOT EXISTS "Ivf_Pohirena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pohkadgens";
+CREATE TABLE IF NOT EXISTS "Ivf_Pohkadgens" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Poroda";
+CREATE TABLE IF NOT EXISTS "Ivf_Poroda" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Poroda_Der";
+CREATE TABLE IF NOT EXISTS "Ivf_Poroda_Der" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Poroda_Laman";
+CREATE TABLE IF NOT EXISTS "Ivf_Poroda_Laman" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Poroda_Ponovlena";
+CREATE TABLE IF NOT EXISTS "Ivf_Poroda_Ponovlena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_PorodaPD";
+CREATE TABLE IF NOT EXISTS "Ivf_PorodaPD" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_PoroGol";
+CREATE TABLE IF NOT EXISTS "Ivf_PoroGol" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_PoroPerev";
+CREATE TABLE IF NOT EXISTS "Ivf_PoroPerev" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pozmachena";
+CREATE TABLE IF NOT EXISTS "Ivf_Pozmachena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Pralis";
+CREATE TABLE IF NOT EXISTS "Ivf_Pralis" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Prichina_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Prichina_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Raion";
+CREATE TABLE IF NOT EXISTS "Ivf_Raion" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Rozmechen_Laman";
+CREATE TABLE IF NOT EXISTS "Ivf_Rozmechen_Laman" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Rozvilka";
+CREATE TABLE IF NOT EXISTS "Ivf_Rozvilka" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_SanStan";
+CREATE TABLE IF NOT EXISTS "Ivf_SanStan" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_StadGnil_Laman";
+CREATE TABLE IF NOT EXISTS "Ivf_StadGnil_Laman" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Status";
+CREATE TABLE IF NOT EXISTS "Ivf_Status" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Status_Der";
+CREATE TABLE IF NOT EXISTS "Ivf_Status_Der" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Stupen_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Stupen_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip_Der";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip_Der" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip_DerPochk";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip_DerPochk" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip_Laman";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip_Laman" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip_Ponovlena";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip_Ponovlena" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Tip_Vpliv";
+CREATE TABLE IF NOT EXISTS "Ivf_Tip_Vpliv" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_TipEroz";
+CREATE TABLE IF NOT EXISTS "Ivf_TipEroz" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_TipGeometrija";
+CREATE TABLE IF NOT EXISTS "Ivf_TipGeometrija" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_TipGruntuu";
+CREATE TABLE IF NOT EXISTS "Ivf_TipGruntuu" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_TipMitka";
+CREATE TABLE IF NOT EXISTS "Ivf_TipMitka" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_TLY";
+CREATE TABLE IF NOT EXISTS "Ivf_TLY" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_User1";
+CREATE TABLE IF NOT EXISTS "Ivf_User1" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_UserGrupa";
+CREATE TABLE IF NOT EXISTS "Ivf_UserGrupa" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_Vid_Vpliv";
+CREATE TABLE IF NOT EXISTS "Ivf_Vid_Vpliv" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_VidLia";
+CREATE TABLE IF NOT EXISTS "Ivf_VidLia" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_VidRos";
+CREATE TABLE IF NOT EXISTS "Ivf_VidRos" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_VidUgit";
+CREATE TABLE IF NOT EXISTS "Ivf_VidUgit" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_VikStruktur";
+CREATE TABLE IF NOT EXISTS "Ivf_VikStruktur" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+
+DROP TABLE IF EXISTS "Ivf_ZmitestGoriz";
+CREATE TABLE IF NOT EXISTS "Ivf_ZmitestGoriz" (LIKE lookup.lookup_TEMPLATE INCLUDING ALL);
+

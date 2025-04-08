@@ -27,12 +27,9 @@ CREATE TABLE IF NOT EXISTS organizations (
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     apex_domain text NOT NULL,
     created_by uuid DEFAULT auth.uid() REFERENCES auth.users(id),
-    state_responsible smallint NULL REFERENCES lookup.lookup_state (code),
     parent_organization_id uuid NULL REFERENCES organizations(id) ON DELETE CASCADE,
     name text NULL
 );
-
-INSERT INTO organizations (apex_domain, name) VALUES ('@thuenen.de', 'Thünen-Institut');
 
 ALTER TABLE organizations ENABLE ROW LEVEL SECURITY;
 
@@ -41,7 +38,7 @@ CREATE TABLE IF NOT EXISTS public.users_profile (
     id uuid not null references auth.users on delete cascade primary key,
     is_admin boolean NOT NULL DEFAULT false,
     state_responsible smallint NULL,
-    organization_id uuid NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    organization_id uuid NULL REFERENCES organizations(id) ON DELETE CASCADE,
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     email text NOT NULL
 );
@@ -67,20 +64,10 @@ begin
   FROM public.organizations
   WHERE apex_domain like domain_part;
 
-  -- If no organization found, raise an exception
-  IF org_id IS NULL THEN
-    RAISE EXCEPTION 'No organization found for domain %', domain_part;
-  END IF;
 
   insert into public.users_profile (id, email, organization_id) values (new.id, new.email, org_id)
   on conflict (id) do update set email = new.email;
 
-  -- Check if the user is an admin - FIXED duplicate check
-  if new.email like '%@thuenen.de' then
-    update public.users_profile set is_admin = true where id = new.id;
-  else
-    update public.users_profile set is_admin = false where id = new.id;
-  end if;
   -- Check if the user is a state responsible
   return new;
 end;
@@ -111,16 +98,6 @@ CREATE TABLE IF NOT EXISTS troop (
 
 ALTER TABLE troop ENABLE ROW LEVEL SECURITY;
 
---CREATE TABLE IF NOT EXISTS troop_permissions (
---    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
---    troop_id uuid NOT NULL REFERENCES troop(id) ON DELETE CASCADE,
---    plot_id uuid NOT NULL REFERENCES inventory_archive.plot(id) ON DELETE CASCADE,
---    cluster_id uuid NOT NULL REFERENCES inventory_archive.cluster(id) ON DELETE CASCADE
---);
---
---ALTER TABLE troop_permissions ENABLE ROW LEVEL SECURITY;
-
-
 
 create table "records" (
     "id" uuid primary key default gen_random_uuid(),
@@ -131,7 +108,6 @@ create table "records" (
     "previous_properties_updated_at" timestamp with time zone not null default now(),
     "is_valid" boolean not null default false,
     "supervisor_id" uuid not null DEFAULT auth.uid() REFERENCES auth.users(id),
-    "plot_id" uuid NULL REFERENCES inventory_archive.plot(id) UNIQUE,
     "troop_id" uuid NULL REFERENCES troop(id),
     "schema_id" uuid NULL REFERENCES public.schemas(id),
     "schema_name" text NULL DEFAULT 'ci2027'
@@ -151,7 +127,6 @@ create table "record_changes" (
     "previous_properties_updated_at" timestamp with time zone not null default now(),
     "is_valid" boolean not null default false,
     "supervisor_id" uuid not null DEFAULT auth.uid() REFERENCES auth.users(id),
-    "plot_id" uuid NULL REFERENCES inventory_archive.plot(id),
     "troop_id" uuid NULL REFERENCES troop(id),
     "schema_id" uuid NULL REFERENCES public.schemas(id),
     "schema_name" text NULL DEFAULT 'ci2027'

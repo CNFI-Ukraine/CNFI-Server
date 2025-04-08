@@ -29,28 +29,29 @@ DROP TABLE IF EXISTS "Derevo_";
 CREATE TABLE "Derevo_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
-    "Uha_Id" INTEGER,
+    "Uha_Id" INTEGER ,
     "X" DOUBLE PRECISION,
     "Y" DOUBLE PRECISION,
+    "center" public.GEOMETRY(Point, 4326),
     "Azimet" DOUBLE PRECISION,
     "Dastance" DOUBLE PRECISION,
     "GORDastance" DOUBLE PRECISION,
     "Uhil" DOUBLE PRECISION,
-    "Tip_Der" INTEGER,
+    "Tip_Der" INTEGER REFERENCES lookup."Ivf_Tip_Der" ( "Id" ),
     "Diametr_Der" DOUBLE PRECISION,
     "Okrugnost_Der" DOUBLE PRECISION,
-    "Status_Der" INTEGER,
-    "Poroda_Der" INTEGER,
-    "DiloDrowa_Der" INTEGER,
-    "KlasKraft" INTEGER,
-    "Rozvilka" INTEGER,
-    "GiveSuche" INTEGER,
-    "SanStan" INTEGER,
-    "Pohkadgens" INTEGER,
-    "Mitka" INTEGER,
-    "JarusDerevo" INTEGER,
-    "Defoliacia" INTEGER,
-    "Dehromacia" INTEGER,
+    "Status_Der" INTEGER REFERENCES lookup."Ivf_Status_Der" ( "Id" ),
+    "Poroda_Der" INTEGER REFERENCES lookup."Ivf_Poroda_Der" ( "Id" ),
+    "DiloDrowa_Der" INTEGER REFERENCES lookup."Ivf_DiloDrowa_Der" ( "Id" ),
+    "KlasKraft" INTEGER REFERENCES lookup."Ivf_KlasKraft" ( "Id" ),
+    "Rozvilka" INTEGER REFERENCES lookup."Ivf_Rozvilka" ( "Id" ),
+    "GiveSuche" INTEGER REFERENCES lookup."Ivf_GiveSuche" ( "Id" ),
+    "SanStan" INTEGER REFERENCES lookup."Ivf_SanStan" ( "Id" ),
+    "Pohkadgens" INTEGER REFERENCES lookup."Ivf_Pohkadgens" ( "Id" ),
+    "Mitka" INTEGER REFERENCES lookup."Ivf_Mitka" ( "Id" ),
+    "JarusDerevo" INTEGER REFERENCES lookup."Ivf_JarusDerevo" ( "Id" ),
+    "Defoliacia" INTEGER REFERENCES lookup."Ivf_Defoliacia" ( "Id" ),
+    "Dehromacia" INTEGER REFERENCES lookup."Ivf_Dehromacia" ( "Id" ),
     "Visota_Derevo" DOUBLE PRECISION,
     "PenPerimert_Derevo" DOUBLE PRECISION,
     "PenDaimert_Derevo" DOUBLE PRECISION,
@@ -60,8 +61,8 @@ CREATE TABLE "Derevo_" (
     "Kora_Tarif" DOUBLE PRECISION,
     "ZZ5_Tarif" DOUBLE PRECISION,
     "ZZ10_Tarif" DOUBLE PRECISION,
-    "DerevoSYHEChinik" INTEGER,
-    "DerevoSYHEStadia" INTEGER,
+    "DerevoSYHEChinik" INTEGER REFERENCES lookup."Ivf_DerevoSYHEChinik" ( "Id" ),
+    "DerevoSYHEStadia" INTEGER REFERENCES lookup."Ivf_DerevoSYHEStadia" ( "Id" ),
     "Krona_Prot_Derevo" DOUBLE PRECISION,
     "RozVusotModel" DOUBLE PRECISION,
     "Visota_Model" DOUBLE PRECISION,
@@ -81,13 +82,13 @@ CREATE TABLE "DerevPochD_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "Tip_DerPochk" INTEGER,
-    "Bazis_DerPochk" INTEGER,
-    "Stupen_DerPochk" INTEGER,
-    "Prichina_DerPochk" INTEGER,
-    "Chinnik_DerPochk" INTEGER,
-    "Chkidnik_DerPochk" INTEGER,
-    "Hvoroba_DerPochk" INTEGER,
+    "Tip_DerPochk" INTEGER REFERENCES lookup."Ivf_Tip_DerPochk" ( "Id" ),
+    "Bazis_DerPochk" INTEGER REFERENCES lookup."Ivf_Bazis_DerPochk" ( "Id" ),
+    "Stupen_DerPochk" INTEGER REFERENCES lookup."Ivf_Stupen_DerPochk" ( "Id" ),
+    "Prichina_DerPochk" INTEGER REFERENCES lookup."Ivf_Prichina_DerPochk" ( "Id" ),
+    "Chinnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chinnik_DerPochk" ( "Id" ),
+    "Chkidnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chkidnik_DerPochk" ( "Id" ),
+    "Hvoroba_DerPochk" INTEGER REFERENCES lookup."Ivf_Hvoroba_DerPochk" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
 
@@ -115,7 +116,7 @@ CREATE TABLE "GruntuuPofil_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "Nazva" INTEGER,
+    "Nazva" INTEGER REFERENCES lookup."Ivf_Nazva" ( "Id" ),
     "Size1" DOUBLE PRECISION,
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
@@ -128,36 +129,36 @@ CREATE TABLE "I_Uha_" (
     "Key2" INTEGER,
     "ID" INTEGER,
     "Pocha" INTEGER,
-    "GrupUgit" INTEGER,
-    "VidUgit" INTEGER,
-    "KatZem" INTEGER,
-    "PoroGol" INTEGER,
-    "PoroPerev" INTEGER,
-    "Bonitet" INTEGER,
-    "TLY" INTEGER,
-    "MezoR" INTEGER,
-    "MikroR" INTEGER,
-    "Ekspoz" INTEGER,
-    "Krutizna" INTEGER,
-    "Pralis" INTEGER,
-    "VikStruktur" INTEGER,
-    "GospodarForma" INTEGER,
-    "GospodarPravo" INTEGER,
-    "GospodarLg" INTEGER,
-    "GospodarLi" INTEGER,
+    "GrupUgit" INTEGER REFERENCES lookup."Ivf_GrupUgit" ( "Id" ),
+    "VidUgit" INTEGER REFERENCES lookup."Ivf_VidUgit" ( "Id" ),
+    "KatZem" INTEGER REFERENCES lookup."Ivf_KatZem" ( "Id" ),
+    "PoroGol" INTEGER REFERENCES lookup."Ivf_PoroGol" ( "Id" ),
+    "PoroPerev" INTEGER REFERENCES lookup."Ivf_PoroPerev" ( "Id" ),
+    "Bonitet" INTEGER REFERENCES lookup."Ivf_Bonitet" ( "Id" ),
+    "TLY" INTEGER REFERENCES lookup."Ivf_TLY" ( "Id" ),
+    "MezoR" INTEGER REFERENCES lookup."Ivf_MezoR" ( "Id" ),
+    "MikroR" INTEGER REFERENCES lookup."Ivf_MikroR" ( "Id" ),
+    "Ekspoz" INTEGER REFERENCES lookup."Ivf_Ekspoz" ( "Id" ),
+    "Krutizna" INTEGER REFERENCES lookup."Ivf_Krutizna" ( "Id" ),
+    "Pralis" INTEGER REFERENCES lookup."Ivf_Pralis" ( "Id" ),
+    "VikStruktur" INTEGER REFERENCES lookup."Ivf_VikStruktur" ( "Id" ),
+    "GospodarForma" INTEGER REFERENCES lookup."Ivf_GospodarForma" ( "Id" ),
+    "GospodarPravo" INTEGER REFERENCES lookup."Ivf_GospodarPravo" ( "Id" ),
+    "GospodarLg" INTEGER REFERENCES lookup."Ivf_GospodarLg" ( "Id" ), 
+    "GospodarLi" INTEGER, -- Check Later
     "GospodarKw" TEXT,
     "GospodarVD" TEXT,
     "GeoMet" TEXT,
-    "TipGruntuu" INTEGER,
-    "Ogolenost" INTEGER,
-    "NameGrunt" INTEGER,
-    "ZmitestGoriz" INTEGER,
-    "FormGumus" INTEGER,
-    "Pohirena" INTEGER,
-    "MechSklad" INTEGER,
-    "Haruvatost" INTEGER,
-    "TipEroz" INTEGER,
-    "Osuh" INTEGER,
+    "TipGruntuu" INTEGER REFERENCES lookup."Ivf_TipGruntuu" ( "Id" ),
+    "Ogolenost" INTEGER REFERENCES lookup."Ivf_Ogolenost" ( "Id" ),
+    "NameGrunt" INTEGER REFERENCES lookup."Ivf_NameGrunt" ( "Id" ),
+    "ZmitestGoriz" INTEGER REFERENCES lookup."Ivf_ZmitestGoriz" ( "Id" ),
+    "FormGumus" INTEGER REFERENCES lookup."Ivf_FormGumus" ( "Id" ),
+    "Pohirena" INTEGER REFERENCES lookup."Ivf_Pohirena" ( "Id" ),
+    "MechSklad" INTEGER REFERENCES lookup."Ivf_MechSklad" ( "Id" ),
+    "Haruvatost" INTEGER REFERENCES lookup."Ivf_Haruvatost" ( "Id" ),
+    "TipEroz" INTEGER REFERENCES lookup."Ivf_TipEroz" ( "Id" ),
+    "Osuh" INTEGER REFERENCES lookup."Ivf_Osuh" ( "Id" ),
     "Area1" DOUBLE PRECISION,
     "Area2" DOUBLE PRECISION,
     "Area3" DOUBLE PRECISION,
@@ -205,1075 +206,15 @@ CREATE TABLE "I_ven_" (
     "DistLe" DOUBLE PRECISION,
     "Zana" TEXT,
     "WHR" DOUBLE PRECISION,
-    "Doctup" INTEGER,
-    "Status" INTEGER,
-    "God" INTEGER,
-    "Obla" INTEGER,
-    "Raion" INTEGER,
-    "UserGrupa" INTEGER,
-    "User1" INTEGER,
+    "Doctup" INTEGER REFERENCES lookup."Ivf_Doctup" ( "Id" ),
+    "Status" INTEGER REFERENCES lookup."Ivf_Status" ( "Id" ),
+    "God" INTEGER REFERENCES lookup."Ivf_God" ( "Id" ),
+    "Obla" INTEGER REFERENCES lookup."Ivf_Obla" ( "Id" ),
+    "Raion" INTEGER REFERENCES lookup."Ivf_Raion" ( "Id" ),
+    "UserGrupa" INTEGER REFERENCES lookup."Ivf_UserGrupa" ( "Id" ),
+    "User1" INTEGER REFERENCES lookup."Ivf_User1" ( "Id" ),
     "ComentObjekat" TEXT,
     "FotoObjekat" TEXT
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Bazis_DerPochk";
-
-CREATE TABLE "Ivf_Bazis_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Bonitet";
-
-CREATE TABLE "Ivf_Bonitet" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Chastka_Vpliv";
-
-CREATE TABLE "Ivf_Chastka_Vpliv" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Chinnik_DerPochk";
-
-CREATE TABLE "Ivf_Chinnik_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Chkidnik_DerPochk";
-
-CREATE TABLE "Ivf_Chkidnik_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_ChsLia";
-
-CREATE TABLE "Ivf_ChsLia" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_ChsRos";
-
-CREATE TABLE "Ivf_ChsRos" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Chstka";
-
-CREATE TABLE "Ivf_Chstka" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Davnist";
-
-CREATE TABLE "Ivf_Davnist" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Davnist_Ponovlena_Pochkodg";
-
-CREATE TABLE "Ivf_Davnist_Ponovlena_Pochkodg" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Defoliacia";
-
-CREATE TABLE "Ivf_Defoliacia" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Dehromacia";
-
-CREATE TABLE "Ivf_Dehromacia" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_DerevoSYHEChinik";
-
-CREATE TABLE "Ivf_DerevoSYHEChinik" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_DerevoSYHEStadia";
-
-CREATE TABLE "Ivf_DerevoSYHEStadia" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_DiloDrowa_Der";
-
-CREATE TABLE "Ivf_DiloDrowa_Der" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Doctup";
-
-CREATE TABLE "Ivf_Doctup" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Ekspoz";
-
-CREATE TABLE "Ivf_Ekspoz" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_FormGumus";
-
-CREATE TABLE "Ivf_FormGumus" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GiveSuche";
-
-CREATE TABLE "Ivf_GiveSuche" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Gnil";
-
-CREATE TABLE "Ivf_Gnil" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_God";
-
-CREATE TABLE "Ivf_God" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GospodarForma";
-
-CREATE TABLE "Ivf_GospodarForma" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GospodarLg";
-
-CREATE TABLE "Ivf_GospodarLg" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GospodarLi";
-
-CREATE TABLE "Ivf_GospodarLi" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER,
-    PRIMARY KEY ( "I1", "Id" )
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GospodarPravo";
-
-CREATE TABLE "Ivf_GospodarPravo" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GrunVisot";
-
-CREATE TABLE "Ivf_GrunVisot" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_GrupUgit";
-
-CREATE TABLE "Ivf_GrupUgit" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Haruvatost";
-
-CREATE TABLE "Ivf_Haruvatost" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Hvoroba_DerPochk";
-
-CREATE TABLE "Ivf_Hvoroba_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Jarus";
-
-CREATE TABLE "Ivf_Jarus" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_JarusDerevo";
-
-CREATE TABLE "Ivf_JarusDerevo" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_KatZem";
-
-CREATE TABLE "Ivf_KatZem" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER,
-    "Grupa" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_KlasKraft";
-
-CREATE TABLE "Ivf_KlasKraft" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Kleimo";
-
-CREATE TABLE "Ivf_Kleimo" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Krutizna";
-
-CREATE TABLE "Ivf_Krutizna" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_MechSklad";
-
-CREATE TABLE "Ivf_MechSklad" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_MezoR";
-
-CREATE TABLE "Ivf_MezoR" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_MikroR";
-
-CREATE TABLE "Ivf_MikroR" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Mitka";
-
-CREATE TABLE "Ivf_Mitka" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Najavnist";
-
-CREATE TABLE "Ivf_Najavnist" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_NameGrunt";
-
-CREATE TABLE "Ivf_NameGrunt" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Nazva";
-
-CREATE TABLE "Ivf_Nazva" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Obla";
-
-CREATE TABLE "Ivf_Obla" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER,
-    "Area" DOUBLE PRECISION,
-    "PointCount" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Ogolenost";
-
-CREATE TABLE "Ivf_Ogolenost" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Osuh";
-
-CREATE TABLE "Ivf_Osuh" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_PenUh";
-
-CREATE TABLE "Ivf_PenUh" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pochkodgenna_Ponovlena";
-
-CREATE TABLE "Ivf_Pochkodgenna_Ponovlena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pochodgena_Ponovlena";
-
-CREATE TABLE "Ivf_Pochodgena_Ponovlena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pochodgenna";
-
-CREATE TABLE "Ivf_Pochodgenna" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pohirena";
-
-CREATE TABLE "Ivf_Pohirena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pohkadgens";
-
-CREATE TABLE "Ivf_Pohkadgens" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Poroda";
-
-CREATE TABLE "Ivf_Poroda" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Poroda_Der";
-
-CREATE TABLE "Ivf_Poroda_Der" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Poroda_Laman";
-
-CREATE TABLE "Ivf_Poroda_Laman" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Poroda_Ponovlena";
-
-CREATE TABLE "Ivf_Poroda_Ponovlena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_PorodaPD";
-
-CREATE TABLE "Ivf_PorodaPD" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_PoroGol";
-
-CREATE TABLE "Ivf_PoroGol" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_PoroPerev";
-
-CREATE TABLE "Ivf_PoroPerev" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pozmachena";
-
-CREATE TABLE "Ivf_Pozmachena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Pralis";
-
-CREATE TABLE "Ivf_Pralis" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Prichina_DerPochk";
-
-CREATE TABLE "Ivf_Prichina_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Raion";
-
-CREATE TABLE "Ivf_Raion" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Rozmechen_Laman";
-
-CREATE TABLE "Ivf_Rozmechen_Laman" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Rozvilka";
-
-CREATE TABLE "Ivf_Rozvilka" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_SanStan";
-
-CREATE TABLE "Ivf_SanStan" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_StadGnil_Laman";
-
-CREATE TABLE "Ivf_StadGnil_Laman" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Status";
-
-CREATE TABLE "Ivf_Status" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Status_Der";
-
-CREATE TABLE "Ivf_Status_Der" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Stupen_DerPochk";
-
-CREATE TABLE "Ivf_Stupen_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip";
-
-CREATE TABLE "Ivf_Tip" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip_Der";
-
-CREATE TABLE "Ivf_Tip_Der" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip_DerPochk";
-
-CREATE TABLE "Ivf_Tip_DerPochk" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip_Laman";
-
-CREATE TABLE "Ivf_Tip_Laman" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip_Ponovlena";
-
-CREATE TABLE "Ivf_Tip_Ponovlena" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Tip_Vpliv";
-
-CREATE TABLE "Ivf_Tip_Vpliv" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_TipEroz";
-
-CREATE TABLE "Ivf_TipEroz" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_TipGeometrija";
-
-CREATE TABLE "Ivf_TipGeometrija" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_TipGruntuu";
-
-CREATE TABLE "Ivf_TipGruntuu" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_TipMitka";
-
-CREATE TABLE "Ivf_TipMitka" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_TLY";
-
-CREATE TABLE "Ivf_TLY" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_User1";
-
-CREATE TABLE "Ivf_User1" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_UserGrupa";
-
-CREATE TABLE "Ivf_UserGrupa" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_Vid_Vpliv";
-
-CREATE TABLE "Ivf_Vid_Vpliv" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_VidLia";
-
-CREATE TABLE "Ivf_VidLia" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_VidRos";
-
-CREATE TABLE "Ivf_VidRos" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_VidUgit";
-
-CREATE TABLE "Ivf_VidUgit" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_VikStruktur";
-
-CREATE TABLE "Ivf_VikStruktur" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
-);
-
-
-DROP TABLE IF EXISTS "Ivf_ZmitestGoriz";
-
-CREATE TABLE "Ivf_ZmitestGoriz" (
-    "I2" INTEGER,
-    "I1" INTEGER,
-    "Id" INTEGER PRIMARY KEY,
-    "Name" TEXT,
-    "Name1" TEXT,
-    "PR" INTEGER
 );
 
 
@@ -1283,13 +224,13 @@ CREATE TABLE "Jarus_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "Jarus" INTEGER,
-    "Poroda" INTEGER,
+    "Jarus" INTEGER REFERENCES lookup."Ivf_Jarus" ( "Id" ),
+    "Poroda" INTEGER REFERENCES lookup."Ivf_Poroda" ( "Id" ),
     "AbsolPovnot" INTEGER,
     "Vik" INTEGER,
     "Vosota" DOUBLE PRECISION,
     "Diametr" DOUBLE PRECISION,
-    "Pochodgenna" INTEGER,
+    "Pochodgenna" INTEGER REFERENCES lookup."Ivf_Pochodgenna" ( "Id" ),
     "Kilkist" DOUBLE PRECISION,
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
@@ -1314,13 +255,13 @@ CREATE TABLE "Laman_" (
     "Dastance2" DOUBLE PRECISION,
     "GORDastance2" DOUBLE PRECISION,
     "Uhil2" DOUBLE PRECISION,
-    "Tip_Laman" INTEGER,
-    "Rozmechen_Laman" INTEGER,
-    "Poroda_Laman" INTEGER,
+    "Tip_Laman" INTEGER REFERENCES lookup."Ivf_Tip_Laman" ( "Id" ),
+    "Rozmechen_Laman" INTEGER REFERENCES lookup."Ivf_Rozmechen_Laman" ( "Id" ),
+    "Poroda_Laman" INTEGER REFERENCES lookup."Ivf_Poroda_Laman" ( "Id" ),
     "Dlina_Laman" DOUBLE PRECISION,
     "Diam1_Laman" DOUBLE PRECISION,
     "Diam2_Laman" DOUBLE PRECISION,
-    "StadGnil_Laman" INTEGER,
+    "StadGnil_Laman" INTEGER REFERENCES lookup."Ivf_StadGnil_Laman" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2" )
 );
 
@@ -1331,8 +272,8 @@ CREATE TABLE "Mitki_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Id" INTEGER,
-    "TipMitka" INTEGER,
-    "TipGeometrija" INTEGER,
+    "TipMitka" INTEGER REFERENCES lookup."Ivf_TipMitka" ( "Id" ),
+    "TipGeometrija" INTEGER REFERENCES lookup."Ivf_TipGeometrija" ( "Id" ),
     "Coment" TEXT,
     PRIMARY KEY ( "Key1", "Key2" )
 );
@@ -1344,7 +285,7 @@ CREATE TABLE "PenGnil_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "Tip" INTEGER,
+    "Tip" INTEGER REFERENCES lookup."Ivf_Tip" ( "Id" ),
     "Pozmin" DOUBLE PRECISION,
     "Chstka" DOUBLE PRECISION,
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
@@ -1357,8 +298,8 @@ CREATE TABLE "PidlisokA_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "PorodaPD" INTEGER,
-    "Chstka" INTEGER,
+    "PorodaPD" INTEGER REFERENCES lookup."Ivf_PorodaPD" ( "Id" ),
+    "Chstka" INTEGER REFERENCES lookup."Ivf_Chstka" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
 
@@ -1377,11 +318,11 @@ CREATE TABLE "Pni_" (
     "GORDastance" DOUBLE PRECISION,
     "Uhil" DOUBLE PRECISION,
     "Diametr" DOUBLE PRECISION,
-    "Poroda" INTEGER,
-    "Davnist" INTEGER,
-    "Gnil" INTEGER,
-    "PenUh" INTEGER,
-    "Kleimo" INTEGER,
+    "Poroda" INTEGER REFERENCES lookup."Ivf_Poroda" ( "Id" ),
+    "Davnist" INTEGER REFERENCES lookup."Ivf_Davnist" ( "Id" ),
+    "Gnil" INTEGER REFERENCES lookup."Ivf_Gnil" ( "Id" ),
+    "PenUh" INTEGER REFERENCES lookup."Ivf_PenUh" ( "Id" ),
+    "Kleimo" INTEGER REFERENCES lookup."Ivf_Kleimo" ( "Id" ),
     "Visota" DOUBLE PRECISION,
     "Vik" INTEGER,
     "Kora" DOUBLE PRECISION,
@@ -1397,9 +338,9 @@ CREATE TABLE "Ponov_Pochkodg_" (
     "Key3" INTEGER,
     "Key4" INTEGER,
     "Id" INTEGER,
-    "Tip_Ponovlena" INTEGER,
+    "Tip_Ponovlena" INTEGER REFERENCES lookup."Ivf_Tip_Ponovlena" ( "Id" ),
     "Kilkist_Ponovlena_Pochkodg" INTEGER,
-    "Davnist_Ponovlena_Pochkodg" INTEGER,
+    "Davnist_Ponovlena_Pochkodg" INTEGER REFERENCES lookup."Ivf_Davnist_Ponovlena_Pochkodg" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3", "Key4" )
 );
 
@@ -1411,13 +352,13 @@ CREATE TABLE "Ponov_Xarak_" (
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Id" INTEGER,
-    "GrunVisot" INTEGER,
-    "Poroda_Ponovlena" INTEGER,
+    "GrunVisot" INTEGER REFERENCES lookup."Ivf_GrunVisot" ( "Id" ),
+    "Poroda_Ponovlena" INTEGER REFERENCES lookup."Ivf_Poroda_Ponovlena" ( "Id" ),
     "DiametrSer_Ponovlena" DOUBLE PRECISION,
     "Vik_Ponovlena" INTEGER,
-    "Pochodgena_Ponovlena" INTEGER,
+    "Pochodgena_Ponovlena" INTEGER REFERENCES lookup."Ivf_Pochodgena_Ponovlena" ( "Id" ),
     "Kilkist_Ponovlena" INTEGER,
-    "Pochkodgenna_Ponovlena" INTEGER,
+    "Pochkodgenna_Ponovlena" INTEGER REFERENCES lookup."Ivf_Pochkodgenna_Ponovlena" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
 
@@ -1428,8 +369,8 @@ CREATE TABLE "Ponovlen_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Id" INTEGER,
-    "Najavnist" INTEGER,
-    "Pozmachena" INTEGER,
+    "Najavnist" INTEGER REFERENCES lookup."Ivf_Najavnist" ( "Id" ),
+    "Pozmachena" INTEGER REFERENCES lookup."Ivf_Pozmachena" ( "Id" ),
     "Primitka" TEXT,
     PRIMARY KEY ( "Key1", "Key2" )
 );
@@ -1441,10 +382,10 @@ CREATE TABLE "Roslunu_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "VidRos" INTEGER,
-    "ChsRos" INTEGER,
-    "VidLia" INTEGER,
-    "ChsLia" INTEGER,
+    "VidRos" INTEGER REFERENCES lookup."Ivf_VidRos" ( "Id" ),
+    "ChsRos" INTEGER REFERENCES lookup."Ivf_ChsRos" ( "Id" ),
+    "VidLia" INTEGER REFERENCES lookup."Ivf_VidLia" ( "Id" ),
+    "ChsLia" INTEGER REFERENCES lookup."Ivf_ChsLia" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
 
@@ -1462,9 +403,8 @@ CREATE TABLE "Vpliv_" (
     "Key1" INTEGER,
     "Key2" INTEGER,
     "Key3" INTEGER,
-    "Tip_Vpliv" INTEGER,
-    "Vid_Vpliv" INTEGER,
-    "Chastka_Vpliv" INTEGER,
+    "Tip_Vpliv" INTEGER REFERENCES lookup."Ivf_Tip_Vpliv" ( "Id" ),
+    "Vid_Vpliv" INTEGER REFERENCES lookup."Ivf_Vid_Vpliv" ( "Id" ),
+    "Chastka_Vpliv" INTEGER REFERENCES lookup."Ivf_Chastka_Vpliv" ( "Id" ),
     PRIMARY KEY ( "Key1", "Key2", "Key3" )
 );
-
