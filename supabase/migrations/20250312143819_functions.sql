@@ -60,3 +60,20 @@ CREATE TRIGGER before_record_insert_or_update
 BEFORE INSERT OR UPDATE ON public.records
 FOR EACH ROW
 EXECUTE FUNCTION fill_previous_properties();
+
+
+
+
+CREATE OR REPLACE FUNCTION inventory_archive.set_center_position()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW."center_position" := public.ST_SetSRID(public.ST_MakePoint(NEW."WGS84_Y", NEW."WGS84_X"), 4326);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_center_position_trigger
+BEFORE INSERT OR UPDATE
+ON inventory_archive."I_ven_"
+FOR EACH ROW
+EXECUTE FUNCTION inventory_archive.set_center_position();

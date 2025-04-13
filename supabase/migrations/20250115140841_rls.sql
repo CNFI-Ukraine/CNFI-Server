@@ -39,5 +39,5 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT public.enable_rls_for_schema('inventory_archive', ARRAY['authenticated']);
-SELECT public.enable_rls_for_schema('lookup', ARRAY['authenticated']);
+SELECT public.enable_rls_for_schema('inventory_archive', ARRAY['authenticated', 'cnfi_analyst']);
+SELECT public.enable_rls_for_schema('lookup', ARRAY['authenticated', 'cnfi_analyst']);

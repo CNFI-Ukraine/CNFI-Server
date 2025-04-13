@@ -22,14 +22,54 @@ SET search_path TO inventory_archive;
 
 SET NAMES 'UTF8';
 
+DROP TABLE IF EXISTS "I_ven_";
 
+CREATE TABLE "I_ven_" (
+    "id" INTEGER PRIMARY KEY,
+    "DateEdit" INTEGER,
+    "DateCreat" INTEGER,
+    "DeviceID" INTEGER,
+    "UserRols" INTEGER,
+    "Versen" TEXT,
+    "OldId" INTEGER,
+    "WGS84_X" DOUBLE PRECISION,
+    "WGS84_Y" DOUBLE PRECISION,
+    "center_position" public.GEOMETRY(Point, 4326),
+    "ID" INTEGER,
+    "Name" TEXT,
+    "Mag" DOUBLE PRECISION,
+    "ChDrav" DOUBLE PRECISION,
+    "ChXOD" DOUBLE PRECISION,
+    "WStart" TEXT,
+    "WClos" TEXT,
+    "X0" DOUBLE PRECISION,
+    "Y0" DOUBLE PRECISION,
+    "WGS84_X1" DOUBLE PRECISION,
+    "WGS84_Y1" DOUBLE PRECISION,
+    "ZonaM" INTEGER,
+    "ZonaF" INTEGER,
+    "X1" DOUBLE PRECISION,
+    "Y1" DOUBLE PRECISION,
+    "DistLe" DOUBLE PRECISION,
+    "Zana" TEXT,
+    "WHR" DOUBLE PRECISION,
+    "Doctup" INTEGER REFERENCES lookup."Ivf_Doctup" ( "Id" ),
+    "Status" INTEGER REFERENCES lookup."Ivf_Status" ( "Id" ),
+    "God" INTEGER REFERENCES lookup."Ivf_God" ( "Id" ),
+    "Obla" INTEGER REFERENCES lookup."Ivf_Obla" ( "Id" ),
+    "Raion" INTEGER REFERENCES lookup."Ivf_Raion" ( "Id" ),
+    "UserGrupa" INTEGER REFERENCES lookup."Ivf_UserGrupa" ( "Id" ),
+    "User1" INTEGER REFERENCES lookup."Ivf_User1" ( "Id" ),
+    "ComentObjekat" TEXT,
+    "FotoObjekat" TEXT
+);
 
-DROP TABLE IF EXISTS "Derevo_";
+DROP TABLE IF EXISTS "tree";
 
-CREATE TABLE "Derevo_" (
-    "Key1" INTEGER,
-    "Key2" INTEGER,
-    "Uha_Id" INTEGER ,
+CREATE TABLE "tree" (
+    "I_ven_id" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "number" INTEGER,
+    "Uha_Id" INTEGER,
     "X" DOUBLE PRECISION,
     "Y" DOUBLE PRECISION,
     "center" public.GEOMETRY(Point, 4326),
@@ -72,14 +112,14 @@ CREATE TABLE "Derevo_" (
     "Dna1ga" DOUBLE PRECISION,
     "Hna1ga" DOUBLE PRECISION,
     "Sna1ga" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "I_ven_id", "number" )
 );
 
 
-DROP TABLE IF EXISTS "DerevPochD_";
+DROP TABLE IF EXISTS "tree_damage";
 
-CREATE TABLE "DerevPochD_" (
-    "Key1" INTEGER,
+CREATE TABLE "tree_damage" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Tip_DerPochk" INTEGER REFERENCES lookup."Ivf_Tip_DerPochk" ( "Id" ),
@@ -93,10 +133,10 @@ CREATE TABLE "DerevPochD_" (
 );
 
 
-DROP TABLE IF EXISTS "GeoMet_";
+DROP TABLE IF EXISTS "parent_material";
 
-CREATE TABLE "GeoMet_" (
-    "Key1" INTEGER,
+CREATE TABLE "parent_material" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Id" INTEGER,
@@ -110,10 +150,10 @@ CREATE TABLE "GeoMet_" (
 );
 
 
-DROP TABLE IF EXISTS "GruntuuPofil_";
+DROP TABLE IF EXISTS "ground_profile";
 
-CREATE TABLE "GruntuuPofil_" (
-    "Key1" INTEGER,
+CREATE TABLE "ground_profile" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Nazva" INTEGER REFERENCES lookup."Ivf_Nazva" ( "Id" ),
@@ -122,10 +162,10 @@ CREATE TABLE "GruntuuPofil_" (
 );
 
 
-DROP TABLE IF EXISTS "I_Uha_";
+DROP TABLE IF EXISTS "damage_intensity";
 
-CREATE TABLE "I_Uha_" (
-    "Key1" INTEGER,
+CREATE TABLE "damage_intensity" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "ID" INTEGER,
     "Pocha" INTEGER,
@@ -176,52 +216,10 @@ CREATE TABLE "I_Uha_" (
 );
 
 
-DROP TABLE IF EXISTS "I_ven_";
+DROP TABLE IF EXISTS "stand_layers";
 
-CREATE TABLE "I_ven_" (
-    "Key1" INTEGER PRIMARY KEY,
-    "DateEdit" INTEGER,
-    "DateCreat" INTEGER,
-    "DeviceID" INTEGER,
-    "UserRols" INTEGER,
-    "Versen" TEXT,
-    "OldId" INTEGER,
-    "WGS84_X" DOUBLE PRECISION,
-    "WGS84_Y" DOUBLE PRECISION,
-    "ID" INTEGER,
-    "Name" TEXT,
-    "Mag" DOUBLE PRECISION,
-    "ChDrav" DOUBLE PRECISION,
-    "ChXOD" DOUBLE PRECISION,
-    "WStart" TEXT,
-    "WClos" TEXT,
-    "X0" DOUBLE PRECISION,
-    "Y0" DOUBLE PRECISION,
-    "WGS84_X1" DOUBLE PRECISION,
-    "WGS84_Y1" DOUBLE PRECISION,
-    "ZonaM" INTEGER,
-    "ZonaF" INTEGER,
-    "X1" DOUBLE PRECISION,
-    "Y1" DOUBLE PRECISION,
-    "DistLe" DOUBLE PRECISION,
-    "Zana" TEXT,
-    "WHR" DOUBLE PRECISION,
-    "Doctup" INTEGER REFERENCES lookup."Ivf_Doctup" ( "Id" ),
-    "Status" INTEGER REFERENCES lookup."Ivf_Status" ( "Id" ),
-    "God" INTEGER REFERENCES lookup."Ivf_God" ( "Id" ),
-    "Obla" INTEGER REFERENCES lookup."Ivf_Obla" ( "Id" ),
-    "Raion" INTEGER REFERENCES lookup."Ivf_Raion" ( "Id" ),
-    "UserGrupa" INTEGER REFERENCES lookup."Ivf_UserGrupa" ( "Id" ),
-    "User1" INTEGER REFERENCES lookup."Ivf_User1" ( "Id" ),
-    "ComentObjekat" TEXT,
-    "FotoObjekat" TEXT
-);
-
-
-DROP TABLE IF EXISTS "Jarus_";
-
-CREATE TABLE "Jarus_" (
-    "Key1" INTEGER,
+CREATE TABLE "stand_layers" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Jarus" INTEGER REFERENCES lookup."Ivf_Jarus" ( "Id" ),
@@ -236,10 +234,10 @@ CREATE TABLE "Jarus_" (
 );
 
 
-DROP TABLE IF EXISTS "Laman_";
+DROP TABLE IF EXISTS "deadwood";
 
-CREATE TABLE "Laman_" (
-    "Key1" INTEGER,
+CREATE TABLE "deadwood" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "Uha_Id" INTEGER,
@@ -266,10 +264,10 @@ CREATE TABLE "Laman_" (
 );
 
 
-DROP TABLE IF EXISTS "Mitki_";
+DROP TABLE IF EXISTS "marks";
 
-CREATE TABLE "Mitki_" (
-    "Key1" INTEGER,
+CREATE TABLE "marks" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "TipMitka" INTEGER REFERENCES lookup."Ivf_TipMitka" ( "Id" ),
@@ -279,10 +277,10 @@ CREATE TABLE "Mitki_" (
 );
 
 
-DROP TABLE IF EXISTS "PenGnil_";
+DROP TABLE IF EXISTS "rotten_stumps";
 
-CREATE TABLE "PenGnil_" (
-    "Key1" INTEGER,
+CREATE TABLE "rotten_stumps" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Tip" INTEGER REFERENCES lookup."Ivf_Tip" ( "Id" ),
@@ -292,10 +290,10 @@ CREATE TABLE "PenGnil_" (
 );
 
 
-DROP TABLE IF EXISTS "PidlisokA_";
+DROP TABLE IF EXISTS "understorey_presence";
 
-CREATE TABLE "PidlisokA_" (
-    "Key1" INTEGER,
+CREATE TABLE "understorey_presence" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "PorodaPD" INTEGER REFERENCES lookup."Ivf_PorodaPD" ( "Id" ),
@@ -304,10 +302,10 @@ CREATE TABLE "PidlisokA_" (
 );
 
 
-DROP TABLE IF EXISTS "Pni_";
+DROP TABLE IF EXISTS "stumps";
 
-CREATE TABLE "Pni_" (
-    "Key1" INTEGER,
+CREATE TABLE "stumps" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "Uha_Id" INTEGER,
@@ -330,10 +328,10 @@ CREATE TABLE "Pni_" (
 );
 
 
-DROP TABLE IF EXISTS "Ponov_Pochkodg_";
+DROP TABLE IF EXISTS "regeneration_damage";
 
-CREATE TABLE "Ponov_Pochkodg_" (
-    "Key1" INTEGER,
+CREATE TABLE "regeneration_damage" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Key4" INTEGER,
@@ -345,10 +343,10 @@ CREATE TABLE "Ponov_Pochkodg_" (
 );
 
 
-DROP TABLE IF EXISTS "Ponov_Xarak_";
+DROP TABLE IF EXISTS "regeneration_type";
 
-CREATE TABLE "Ponov_Xarak_" (
-    "Key1" INTEGER,
+CREATE TABLE "regeneration_type" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Id" INTEGER,
@@ -363,10 +361,10 @@ CREATE TABLE "Ponov_Xarak_" (
 );
 
 
-DROP TABLE IF EXISTS "Ponovlen_";
+DROP TABLE IF EXISTS "regeneration_presence";
 
-CREATE TABLE "Ponovlen_" (
-    "Key1" INTEGER,
+CREATE TABLE "regeneration_presence" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "Najavnist" INTEGER REFERENCES lookup."Ivf_Najavnist" ( "Id" ),
@@ -376,10 +374,10 @@ CREATE TABLE "Ponovlen_" (
 );
 
 
-DROP TABLE IF EXISTS "Roslunu_";
+DROP TABLE IF EXISTS "plants";
 
-CREATE TABLE "Roslunu_" (
-    "Key1" INTEGER,
+CREATE TABLE "plants" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "VidRos" INTEGER REFERENCES lookup."Ivf_VidRos" ( "Id" ),
@@ -397,10 +395,10 @@ CREATE TABLE "Sistem" (
 );
 
 
-DROP TABLE IF EXISTS "Vpliv_";
+DROP TABLE IF EXISTS "impact";
 
-CREATE TABLE "Vpliv_" (
-    "Key1" INTEGER,
+CREATE TABLE "impact" (
+    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Tip_Vpliv" INTEGER REFERENCES lookup."Ivf_Tip_Vpliv" ( "Id" ),
