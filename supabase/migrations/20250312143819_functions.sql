@@ -74,6 +74,6 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER set_center_position_trigger
 BEFORE INSERT OR UPDATE
-ON inventory_archive."I_ven_"
+ON inventory_archive."upper_canopy_layer"
 FOR EACH ROW
 EXECUTE FUNCTION inventory_archive.set_center_position();

@@ -22,9 +22,9 @@ SET search_path TO inventory_archive;
 
 SET NAMES 'UTF8';
 
-DROP TABLE IF EXISTS "I_ven_";
+DROP TABLE IF EXISTS "upper_canopy_layer";
 
-CREATE TABLE "I_ven_" (
+CREATE TABLE "upper_canopy_layer" (
     "id" INTEGER PRIMARY KEY,
     "DateEdit" INTEGER,
     "DateCreat" INTEGER,
@@ -64,110 +64,12 @@ CREATE TABLE "I_ven_" (
     "FotoObjekat" TEXT
 );
 
-DROP TABLE IF EXISTS "tree";
+DROP TABLE IF EXISTS damage_intensity;
 
-CREATE TABLE "tree" (
-    "I_ven_id" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
-    "number" INTEGER,
-    "Uha_Id" INTEGER,
-    "X" DOUBLE PRECISION,
-    "Y" DOUBLE PRECISION,
-    "center" public.GEOMETRY(Point, 4326),
-    "Azimet" DOUBLE PRECISION,
-    "Dastance" DOUBLE PRECISION,
-    "GORDastance" DOUBLE PRECISION,
-    "Uhil" DOUBLE PRECISION,
-    "Tip_Der" INTEGER REFERENCES lookup."Ivf_Tip_Der" ( "Id" ),
-    "Diametr_Der" DOUBLE PRECISION,
-    "Okrugnost_Der" DOUBLE PRECISION,
-    "Status_Der" INTEGER REFERENCES lookup."Ivf_Status_Der" ( "Id" ),
-    "Poroda_Der" INTEGER REFERENCES lookup."Ivf_Poroda_Der" ( "Id" ),
-    "DiloDrowa_Der" INTEGER REFERENCES lookup."Ivf_DiloDrowa_Der" ( "Id" ),
-    "KlasKraft" INTEGER REFERENCES lookup."Ivf_KlasKraft" ( "Id" ),
-    "Rozvilka" INTEGER REFERENCES lookup."Ivf_Rozvilka" ( "Id" ),
-    "GiveSuche" INTEGER REFERENCES lookup."Ivf_GiveSuche" ( "Id" ),
-    "SanStan" INTEGER REFERENCES lookup."Ivf_SanStan" ( "Id" ),
-    "Pohkadgens" INTEGER REFERENCES lookup."Ivf_Pohkadgens" ( "Id" ),
-    "Mitka" INTEGER REFERENCES lookup."Ivf_Mitka" ( "Id" ),
-    "JarusDerevo" INTEGER REFERENCES lookup."Ivf_JarusDerevo" ( "Id" ),
-    "Defoliacia" INTEGER REFERENCES lookup."Ivf_Defoliacia" ( "Id" ),
-    "Dehromacia" INTEGER REFERENCES lookup."Ivf_Dehromacia" ( "Id" ),
-    "Visota_Derevo" DOUBLE PRECISION,
-    "PenPerimert_Derevo" DOUBLE PRECISION,
-    "PenDaimert_Derevo" DOUBLE PRECISION,
-    "Krona_Giva_Derevo" DOUBLE PRECISION,
-    "Krona_Mertva_Derevo" DOUBLE PRECISION,
-    "Vik_Tarif" INTEGER,
-    "Kora_Tarif" DOUBLE PRECISION,
-    "ZZ5_Tarif" DOUBLE PRECISION,
-    "ZZ10_Tarif" DOUBLE PRECISION,
-    "DerevoSYHEChinik" INTEGER REFERENCES lookup."Ivf_DerevoSYHEChinik" ( "Id" ),
-    "DerevoSYHEStadia" INTEGER REFERENCES lookup."Ivf_DerevoSYHEStadia" ( "Id" ),
-    "Krona_Prot_Derevo" DOUBLE PRECISION,
-    "RozVusotModel" DOUBLE PRECISION,
-    "Visota_Model" DOUBLE PRECISION,
-    "Obem_Model" DOUBLE PRECISION,
-    "Vna1ga" DOUBLE PRECISION,
-    "Kna1ga" DOUBLE PRECISION,
-    "Dna1ga" DOUBLE PRECISION,
-    "Hna1ga" DOUBLE PRECISION,
-    "Sna1ga" DOUBLE PRECISION,
-    PRIMARY KEY ( "I_ven_id", "number" )
-);
-
-
-DROP TABLE IF EXISTS "tree_damage";
-
-CREATE TABLE "tree_damage" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+CREATE TABLE damage_intensity (
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
-    "Key3" INTEGER,
-    "Tip_DerPochk" INTEGER REFERENCES lookup."Ivf_Tip_DerPochk" ( "Id" ),
-    "Bazis_DerPochk" INTEGER REFERENCES lookup."Ivf_Bazis_DerPochk" ( "Id" ),
-    "Stupen_DerPochk" INTEGER REFERENCES lookup."Ivf_Stupen_DerPochk" ( "Id" ),
-    "Prichina_DerPochk" INTEGER REFERENCES lookup."Ivf_Prichina_DerPochk" ( "Id" ),
-    "Chinnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chinnik_DerPochk" ( "Id" ),
-    "Chkidnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chkidnik_DerPochk" ( "Id" ),
-    "Hvoroba_DerPochk" INTEGER REFERENCES lookup."Ivf_Hvoroba_DerPochk" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
-);
-
-
-DROP TABLE IF EXISTS "parent_material";
-
-CREATE TABLE "parent_material" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
-    "Key2" INTEGER,
-    "Key3" INTEGER,
-    "Id" INTEGER,
-    "X" DOUBLE PRECISION,
-    "Y" DOUBLE PRECISION,
-    "Azimet" DOUBLE PRECISION,
-    "Dastance" DOUBLE PRECISION,
-    "GORDastance" DOUBLE PRECISION,
-    "Uhil" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
-);
-
-
-DROP TABLE IF EXISTS "ground_profile";
-
-CREATE TABLE "ground_profile" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
-    "Key2" INTEGER,
-    "Key3" INTEGER,
-    "Nazva" INTEGER REFERENCES lookup."Ivf_Nazva" ( "Id" ),
-    "Size1" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
-);
-
-
-DROP TABLE IF EXISTS "damage_intensity";
-
-CREATE TABLE "damage_intensity" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
-    "Key2" INTEGER,
-    "ID" INTEGER,
+    "ID" INTEGER, -- equals to "key2" and therefore not needed
     "Pocha" INTEGER,
     "GrupUgit" INTEGER REFERENCES lookup."Ivf_GrupUgit" ( "Id" ),
     "VidUgit" INTEGER REFERENCES lookup."Ivf_VidUgit" ( "Id" ),
@@ -212,14 +114,111 @@ CREATE TABLE "damage_intensity" (
     "HzProb" DOUBLE PRECISION,
     "AzProb" DOUBLE PRECISION,
     "PovnotaVID" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2" )
+);
+
+DROP TABLE IF EXISTS "tree";
+
+CREATE TABLE "tree" (
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
+    "number" INTEGER,
+    "damage_intensity_id" INTEGER,
+    "X" DOUBLE PRECISION,
+    "Y" DOUBLE PRECISION,
+    "center" public.GEOMETRY(Point, 4326),
+    "Azimet" DOUBLE PRECISION,
+    "Dastance" DOUBLE PRECISION,
+    "GORDastance" DOUBLE PRECISION,
+    "Uhil" DOUBLE PRECISION,
+    "Tip_Der" INTEGER REFERENCES lookup."Ivf_Tip_Der" ( "Id" ),
+    "Diametr_Der" DOUBLE PRECISION,
+    "Okrugnost_Der" DOUBLE PRECISION,
+    "Status_Der" INTEGER REFERENCES lookup."Ivf_Status_Der" ( "Id" ),
+    "Poroda_Der" INTEGER REFERENCES lookup."Ivf_Poroda_Der" ( "Id" ),
+    "DiloDrowa_Der" INTEGER REFERENCES lookup."Ivf_DiloDrowa_Der" ( "Id" ),
+    "KlasKraft" INTEGER REFERENCES lookup."Ivf_KlasKraft" ( "Id" ),
+    "Rozvilka" INTEGER REFERENCES lookup."Ivf_Rozvilka" ( "Id" ),
+    "GiveSuche" INTEGER REFERENCES lookup."Ivf_GiveSuche" ( "Id" ),
+    "SanStan" INTEGER REFERENCES lookup."Ivf_SanStan" ( "Id" ),
+    "Pohkadgens" INTEGER REFERENCES lookup."Ivf_Pohkadgens" ( "Id" ),
+    "Mitka" INTEGER REFERENCES lookup."Ivf_Mitka" ( "Id" ),
+    "JarusDerevo" INTEGER REFERENCES lookup."Ivf_JarusDerevo" ( "Id" ),
+    "Defoliacia" INTEGER REFERENCES lookup."Ivf_Defoliacia" ( "Id" ),
+    "Dehromacia" INTEGER REFERENCES lookup."Ivf_Dehromacia" ( "Id" ),
+    "Visota_Derevo" DOUBLE PRECISION,
+    "PenPerimert_Derevo" DOUBLE PRECISION,
+    "PenDaimert_Derevo" DOUBLE PRECISION,
+    "Krona_Giva_Derevo" DOUBLE PRECISION,
+    "Krona_Mertva_Derevo" DOUBLE PRECISION,
+    "Vik_Tarif" INTEGER,
+    "Kora_Tarif" DOUBLE PRECISION,
+    "ZZ5_Tarif" DOUBLE PRECISION,
+    "ZZ10_Tarif" DOUBLE PRECISION,
+    "DerevoSYHEChinik" INTEGER REFERENCES lookup."Ivf_DerevoSYHEChinik" ( "Id" ),
+    "DerevoSYHEStadia" INTEGER REFERENCES lookup."Ivf_DerevoSYHEStadia" ( "Id" ),
+    "Krona_Prot_Derevo" DOUBLE PRECISION,
+    "RozVusotModel" DOUBLE PRECISION,
+    "Visota_Model" DOUBLE PRECISION,
+    "Obem_Model" DOUBLE PRECISION,
+    "Vna1ga" DOUBLE PRECISION,
+    "Kna1ga" DOUBLE PRECISION,
+    "Dna1ga" DOUBLE PRECISION,
+    "Hna1ga" DOUBLE PRECISION,
+    "Sna1ga" DOUBLE PRECISION,
+    PRIMARY KEY ( "upper_canopy_layer_id", "number" )
+);
+
+
+DROP TABLE IF EXISTS "tree_damage";
+
+CREATE TABLE "tree_damage" (
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
+    "tree_number" INTEGER,
+    "Key3" INTEGER,
+    "Tip_DerPochk" INTEGER REFERENCES lookup."Ivf_Tip_DerPochk" ( "Id" ),
+    "Bazis_DerPochk" INTEGER REFERENCES lookup."Ivf_Bazis_DerPochk" ( "Id" ),
+    "Stupen_DerPochk" INTEGER REFERENCES lookup."Ivf_Stupen_DerPochk" ( "Id" ),
+    "Prichina_DerPochk" INTEGER REFERENCES lookup."Ivf_Prichina_DerPochk" ( "Id" ),
+    "Chinnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chinnik_DerPochk" ( "Id" ),
+    "Chkidnik_DerPochk" INTEGER REFERENCES lookup."Ivf_Chkidnik_DerPochk" ( "Id" ),
+    "Hvoroba_DerPochk" INTEGER REFERENCES lookup."Ivf_Hvoroba_DerPochk" ( "Id" ),
+    PRIMARY KEY ( "upper_canopy_layer_id", "tree_number", "Key3" )
+);
+
+
+DROP TABLE IF EXISTS "parent_material";
+
+CREATE TABLE "parent_material" (
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
+    "Key2" INTEGER,
+    "Key3" INTEGER,
+    "Id" INTEGER,
+    "X" DOUBLE PRECISION,
+    "Y" DOUBLE PRECISION,
+    "Azimet" DOUBLE PRECISION,
+    "Dastance" DOUBLE PRECISION,
+    "GORDastance" DOUBLE PRECISION,
+    "Uhil" DOUBLE PRECISION,
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
+);
+
+
+DROP TABLE IF EXISTS "ground_profile";
+
+CREATE TABLE "ground_profile" (
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
+    "Key2" INTEGER,
+    "Key3" INTEGER,
+    "Nazva" INTEGER REFERENCES lookup."Ivf_Nazva" ( "Id" ),
+    "Size1" DOUBLE PRECISION,
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
 DROP TABLE IF EXISTS "stand_layers";
 
 CREATE TABLE "stand_layers" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Jarus" INTEGER REFERENCES lookup."Ivf_Jarus" ( "Id" ),
@@ -230,17 +229,17 @@ CREATE TABLE "stand_layers" (
     "Diametr" DOUBLE PRECISION,
     "Pochodgenna" INTEGER REFERENCES lookup."Ivf_Pochodgenna" ( "Id" ),
     "Kilkist" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
 DROP TABLE IF EXISTS "deadwood";
 
 CREATE TABLE "deadwood" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
-    "Id" INTEGER,
-    "Uha_Id" INTEGER,
+    "Id" INTEGER, --- mostly equals to "key2" axcept for 85 records
+    "damage_intensity_id" INTEGER,
     "X1" DOUBLE PRECISION,
     "Y1" DOUBLE PRECISION,
     "Azimet1" DOUBLE PRECISION,
@@ -260,55 +259,55 @@ CREATE TABLE "deadwood" (
     "Diam1_Laman" DOUBLE PRECISION,
     "Diam2_Laman" DOUBLE PRECISION,
     "StadGnil_Laman" INTEGER REFERENCES lookup."Ivf_StadGnil_Laman" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2" )
 );
 
 
 DROP TABLE IF EXISTS "marks";
 
 CREATE TABLE "marks" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "TipMitka" INTEGER REFERENCES lookup."Ivf_TipMitka" ( "Id" ),
     "TipGeometrija" INTEGER REFERENCES lookup."Ivf_TipGeometrija" ( "Id" ),
     "Coment" TEXT,
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2" )
 );
 
 
 DROP TABLE IF EXISTS "rotten_stumps";
 
 CREATE TABLE "rotten_stumps" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Tip" INTEGER REFERENCES lookup."Ivf_Tip" ( "Id" ),
     "Pozmin" DOUBLE PRECISION,
     "Chstka" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
 DROP TABLE IF EXISTS "understorey_presence";
 
 CREATE TABLE "understorey_presence" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "PorodaPD" INTEGER REFERENCES lookup."Ivf_PorodaPD" ( "Id" ),
     "Chstka" INTEGER REFERENCES lookup."Ivf_Chstka" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
 DROP TABLE IF EXISTS "stumps";
 
 CREATE TABLE "stumps" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
-    "Uha_Id" INTEGER,
+    "damage_intensity_id" INTEGER,
     "X" DOUBLE PRECISION,
     "Y" DOUBLE PRECISION,
     "Azimet" DOUBLE PRECISION,
@@ -324,14 +323,14 @@ CREATE TABLE "stumps" (
     "Visota" DOUBLE PRECISION,
     "Vik" INTEGER,
     "Kora" DOUBLE PRECISION,
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2" )
 );
 
 
 DROP TABLE IF EXISTS "regeneration_damage";
 
 CREATE TABLE "regeneration_damage" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Key4" INTEGER,
@@ -339,14 +338,14 @@ CREATE TABLE "regeneration_damage" (
     "Tip_Ponovlena" INTEGER REFERENCES lookup."Ivf_Tip_Ponovlena" ( "Id" ),
     "Kilkist_Ponovlena_Pochkodg" INTEGER,
     "Davnist_Ponovlena_Pochkodg" INTEGER REFERENCES lookup."Ivf_Davnist_Ponovlena_Pochkodg" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3", "Key4" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3", "Key4" )
 );
 
 
 DROP TABLE IF EXISTS "regeneration_type";
 
 CREATE TABLE "regeneration_type" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Id" INTEGER,
@@ -357,34 +356,34 @@ CREATE TABLE "regeneration_type" (
     "Pochodgena_Ponovlena" INTEGER REFERENCES lookup."Ivf_Pochodgena_Ponovlena" ( "Id" ),
     "Kilkist_Ponovlena" INTEGER,
     "Pochkodgenna_Ponovlena" INTEGER REFERENCES lookup."Ivf_Pochkodgenna_Ponovlena" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
 DROP TABLE IF EXISTS "regeneration_presence";
 
 CREATE TABLE "regeneration_presence" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Id" INTEGER,
     "Najavnist" INTEGER REFERENCES lookup."Ivf_Najavnist" ( "Id" ),
     "Pozmachena" INTEGER REFERENCES lookup."Ivf_Pozmachena" ( "Id" ),
     "Primitka" TEXT,
-    PRIMARY KEY ( "Key1", "Key2" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2" )
 );
 
 
 DROP TABLE IF EXISTS "plants";
 
 CREATE TABLE "plants" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "VidRos" INTEGER REFERENCES lookup."Ivf_VidRos" ( "Id" ),
     "ChsRos" INTEGER REFERENCES lookup."Ivf_ChsRos" ( "Id" ),
     "VidLia" INTEGER REFERENCES lookup."Ivf_VidLia" ( "Id" ),
     "ChsLia" INTEGER REFERENCES lookup."Ivf_ChsLia" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
 
 
@@ -398,11 +397,11 @@ CREATE TABLE "Sistem" (
 DROP TABLE IF EXISTS "impact";
 
 CREATE TABLE "impact" (
-    "Key1" INTEGER REFERENCES "I_ven_" ( "id" ) ON DELETE CASCADE,
+    "upper_canopy_layer_id" INTEGER REFERENCES "upper_canopy_layer" ( "id" ) ON DELETE CASCADE,
     "Key2" INTEGER,
     "Key3" INTEGER,
     "Tip_Vpliv" INTEGER REFERENCES lookup."Ivf_Tip_Vpliv" ( "Id" ),
     "Vid_Vpliv" INTEGER REFERENCES lookup."Ivf_Vid_Vpliv" ( "Id" ),
     "Chastka_Vpliv" INTEGER REFERENCES lookup."Ivf_Chastka_Vpliv" ( "Id" ),
-    PRIMARY KEY ( "Key1", "Key2", "Key3" )
+    PRIMARY KEY ( "upper_canopy_layer_id", "Key2", "Key3" )
 );
